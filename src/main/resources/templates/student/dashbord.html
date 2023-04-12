@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar ::navbar"></div>
+<div class="container">
+    <div class="alert alert-success" th:if="${message}">
+        <p th:text="${message}"></p>
+    </div>
+    <div class="row justify-content-between">
+        <!--Bagian kiri-->
+        <div class="col-md-7 ">
+            <h3>Record Absen</h3>
+            <table class="table table-bordered col-7 table-responsive p-2">
+                <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th>Kelas</th>
+                    <th>Nim</th>
+                    <th>Nama</th>
+                    <th>Mata Kuliah</th>
+                    <th>Dosen</th>
+                    <th>Tanggal</th>
+                    <th>Jam</th>
+                    <th>Keterangan</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="absen : ${records}">
+                    <td th:text="${absen.student.kelas}"></td>
+                    <td th:text="${absen.student.nim}"></td>
+                    <td th:text="${absen.student.nama}"></td>
+                    <td th:text="${absen.dosen.matakuliah.name}"></td>
+                    <td th:text="${absen.dosen.namaDosen}"></td>
+                    <td th:text="${#dates.format(absen.date, 'EEEE-dd-MMMM-yyyy')}"></td>
+                    <td th:text="${#dates.format(absen.date, 'HH:mm')}"></td>
+                    <td th:text="${absen.status}"></td>
+                    <td>
+                        <form action="#" th:action="@{absensi/delete/{id}(id=${absen.id})}" method="post">
+                            <input hidden value="${absen.id}" name="id">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <button th:attr="data-id=${absen.id}, data-nama=${absen.student.nama}, data-status=${absen.status}"
+                                data-toggle="modal" data-target="#myModal" class="edit-absen btn btn-warning">Edit
+                        </button>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!--Bagian kanan-->
+        <div class="col-5">
+            <h3>Input Absensi</h3>
+            <form  th:action="@{/student/absen}" method="post">
+                <div class="form-group">
+                    <label for="nim">Tanggal Jam:</label>
+                    <input type="datetime-local" class="form-control" id="nim" name="date" required value="${#dates.format(absen.date, 'yyyy-MM-dd\'T\'HH:mm')}" >
+                </div>
+                <div class="form-group">
+                    <label >Keterangan:</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="hadir" name="status"   value="hadir" required>
+                        <label class="form-check-label" for="hadir">Hadir</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="izin" name="status"    value="izin" required>
+                        <label class="form-check-label" for="izin">Izin</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="alpha" name="status"   value="alpha" required>
+                        <label class="form-check-label" for="alpha">Alpha</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="sakit" name="status"   value="sakit" required>
+                        <label class="form-check-label" for="alpha">Sakit</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label >Dosen - Matakuliah</label><br>
+                    <select class="form-select" name="dosen">
+                        <option th:each="option : ${dosens}" th:value="${option.id}" th:text="${option.namaDosen} + ' - ' + ${option.matakuliah.name}"></option>
+                    </select>
+                </div>
+                <div class="text-left">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Edit Absen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form untuk mengedit absen -->
+                <form action="#" th:action="@{/student/absensi/update}" method="post">
+                    <div class="form-group">
+                        <label for="idAbsen">ID Absen</label>
+                        <input type="text" name="id" class="form-control" id="idAbsen" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="nama_mhs">Nama Siswa</label>
+                        <input type="text" class="form-control" id="nama_mhs" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="statusAbsen">Status Absen</label>
+                        <select id="statusAbsen" name="statusSelected">
+                            <option value="ALFA">ALFA</option>
+                            <option value="IZIN">IZIN</option>
+                            <option value="SAKIT">SAKIT</option>
+                            <option value="HADIR">HADIR</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript untuk mengisi nilai dari data-id dan data-nama ke dalam elemen di modal -->
+<script>
+$('.edit-absen').click(function(){
+    //clone dialog and remove ids to ensure uniqueness
+     var $modal = $('#myModal').clone().removeAttr('id');
+     var status = $('#myModal').data('status');
+     var id = $(this).data('id');
+     var nama_mhs = $(this).data('nama');
+     var status = $(this).data('status');
+     console.log(nama_mhs);
+     console.log(status);
+     console.log(id);
+     $(".modal-body #idAbsen").val(id);
+     $(".modal-body #nama_mhs").val(nama_mhs);
+     var select = $(".modal-body #statusAbsen");
+     select.val(status);
+});
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

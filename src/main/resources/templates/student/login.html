@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Mahasiswa</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div th:if="${not #strings.isEmpty(message)}" class="alert alert-success m-4" role="alert">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:if="${not #strings.isEmpty(error)}" class="alert alert-danger m-4" role="alert">
+        <p th:text="${error}"></p>
+    </div>
+    <div class="row justify-content-center m-4">
+        <div class="col-md-8">
+            <h1 class="text-left">Login</h1>
+        </div>
+        <div class="col-md-4">
+        <form th:object="${mhs}" action="#" th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label for="nim">Username <span class="font-italic">Gunakan nim untuk mahasiswa</span> </label>
+                <input type="text" class="form-control" id="nim" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="">
+                <button type="submit" class="btn btn-primary">Login Sekarang</button>
+            </div>
+        </form>
+            <br>
+            <a class="link"  th:href="@{/student/register}">Daftar Mahasiswa</a>
+            <a class="link"  th:href="@{/dosen/register}">Daftar Dosen</a>
+    </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

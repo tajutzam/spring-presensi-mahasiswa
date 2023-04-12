@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar_dosen ::navbar"></div>
+<div class="container">
+  <div class="alert alert-success" th:if="${message}">
+    <p th:text="${message}"></p>
+  </div>
+  <div class="alert alert-success" th:if="${error}">
+    <p th:text="${error}"></p>
+  </div>
+
+  <button th:href="@{/dosen/mahasiswa/add}" type="button" class="btn btn-secondary mb-2 mt-2" >Kembali</button>
+  <br><caption>Tambah Mahasiswa</caption>
+  <div class="">
+    <form class="form col-5" th:object="${mhs}" action="#" th:action="@{/dosen/mahasiswa/add/post}" method="post">
+      <div class="form-group">
+        <label for="email">Nim</label>
+        <input type="text" class="form-control" id="nim" th:field="*{nim}" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" th:field="*{email}" required>
+      </div>
+      <div class="form-group">
+        <label for="nama">Nama</label>
+        <input type="text" class="form-control" id="nama" th:field="*{nama}" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" th:field="*{password}" required>
+      </div>
+      <div class="form-group">
+        <label for="kelas">Kelas</label>
+        <input type="text" class="form-control" id="kelas" th:field="*{kelas}" required>
+      </div>
+      <div class="form-group">
+        <label>Jurusan</label>
+        <select th:field="*{jurusan}">
+          <option th:each="jurusan : ${jurusans}"
+                  th:value="${jurusan.id}"
+                  th:text="${jurusan.jurusan}"></option>
+        </select>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Tambah</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

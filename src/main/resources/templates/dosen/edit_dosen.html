@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit data dosen</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar_dosen ::navbar"></div>
+<div class="container">
+  <form class="form col-5" th:object="${dosen}"  method="post">
+    <caption>Edit Dosen</caption>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" id="username" required placeholder="Masukkan Username Dosen" th:field="*{username}">
+    </div>
+    <div class="form-group">
+      <label for="nama">Nama:</label>
+      <input type="text" class="form-control" id="nama" th:field="*{namaDosen}" required  placeholder="Masukkan email Mahasiswa">
+      <input hidden type="text" class="form-control" id="id" th:field="*{id}" required  placeholder="Masukkan email Mahasiswa">
+    </div>
+    <label for="mat">Mata kuliah</label>
+    <select id="mat" name="matkulSelected" class="form-select mb-2" th:object="${dosen}" >
+      <option th:each="matkul : ${matkuls}"
+              th:value="${matkul.id}"
+              th:text="${matkul.name}"
+              th:selected="${matkul.name == dosen.matakuliah.name}"
+      ></option>
+    </select>
+    <div class="">
+      <button  type="submit" class="btn btn-primary"> Simpan </button>
+    </div>
+  </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

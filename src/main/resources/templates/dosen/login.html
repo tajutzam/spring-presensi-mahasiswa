@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Dokter</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center m-4">
+        <div th:if="${not #strings.isEmpty(message)}" class="alert alert-success" role="alert">
+            <p th:text="${message}"></p>
+        </div>
+        <div class="col-md-8">
+            <h1 class="text-left">Login</h1>
+        </div><div class="col-md-4">
+        <form th:object="${dosen}" action="#" th:action="@{/dosen/authenticate}" method="post">
+            <div class="form-group">
+                <label for="username">Nim:</label>
+                <input type="text" class="form-control" id="username" name="username" th:field="*{username}" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" th:field="*{password}" required>
+            </div>
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-primary form-control">Login</button>
+            </div>
+            <a class="link" th:href="/dosen/register">Daftar menjadi dosen</a>
+        </form>
+    </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

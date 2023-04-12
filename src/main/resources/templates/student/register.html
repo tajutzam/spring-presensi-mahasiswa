@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contoh Template HTML dengan Thymeleaf dan Bootstrap</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Memuat stylesheet dari Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+</head>
+<body>
+    <div class="container m-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Register Mahasiswa</h2>
+            </div>
+            <div class="col-md-6">
+                <div th:if="${not #strings.isEmpty(message)}" class="alert alert-danger" role="alert">
+                    <p th:text="${message}"></p>
+                </div>
+                <form th:object="${mhs}" action="#" th:action="@{/student/register}" method="post">
+                    <div class="form-group">
+                        <label for="email">Nim</label>
+                        <input type="text" class="form-control" id="nim" th:field="*{nim}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" class="form-control" id="nama" th:field="*{nama}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kelas">Kelas</label>
+                        <input type="text" class="form-control" id="kelas" th:field="*{kelas}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" th:field="*{password}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Jurusan</label>
+                        <select th:field="*{jurusan}">
+                            <option th:each="jurusan : ${jurusans}"
+                                    th:value="${jurusan.id}"
+                                    th:text="${jurusan.jurusan}"></option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Daftar Sekarang</button>
+                    </div>
+                    <div class="col-12">
+                        <a href="student/login">login Sekarang</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar_dosen ::navbar"></div>
+<div class="container">
+
+    <form class="form col-5" th:object="${mahasiswa}"  method="post">
+        <caption>Edit Mahasiswa</caption>
+        <div class="form-group">
+            <label for="name">Nama:</label>
+            <input type="text" class="form-control" id="name" required placeholder="Masukkan nama Mahasiswa" th:field="*{nama}">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}" required  placeholder="Masukkan email Mahasiswa">
+        </div>
+        <div class="form-group">
+            <label for="message">Nim:</label>
+            <textarea class="form-control" id="message" th:field="*{nim}" required placeholder="Masukkan nim mahasiswa"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="message">Kelas:</label>
+            <textarea class="form-control" id="kelas" th:field="*{kelas}" required placeholder="Masukkan Kelas mahasiswa"></textarea>
+        </div>
+        <div class="">
+            <button type="submit" class="button btn-primary"> Simpan </button>
+        </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

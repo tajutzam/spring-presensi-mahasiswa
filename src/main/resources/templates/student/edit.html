@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Memuat stylesheet dari Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:replace="fragments/navbar ::navbar"></div>
+
+<div class="container">
+    <div class="alert alert-danger" th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+    <h2>Update Data Mahasiswa</h2>
+    <br>
+    <form class="col-5" th:object="${mhs}" method="post" action="#" th:action="@{/student/update}">
+        <div class="form-group">
+            <label for="name">Nama:</label>
+            <input type="text" th:field="*{id}" hidden>
+            <input type="text" class="form-control" id="name" required placeholder="Masukkan nama Anda" th:field="*{nama}">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}" required  placeholder="Masukkan email Anda">
+        </div>
+        <div class="form-group">
+            <label for="message">Nim:</label>
+            <textarea class="form-control" id="message" th:field="*{nim}" required placeholder="Masukkan pesan Anda"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="kelas">Kelas:</label>
+            <textarea class="form-control" id="kelas" th:field="*{kelas}" required placeholder="Masukkan Kelas Anda"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
